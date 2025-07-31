@@ -1,15 +1,31 @@
 'use client'
 
+import { useState } from 'react'
 import Hero from './components/Hero'
 import ThreadGenerator from './components/ThreadGenerator'
 import HowItWorks from './components/HowItWorks'
 import Footer from './components/Footer'
 import ThemeToggle from './components/ThemeToggle'
-import Templates from './components/Templates'
 import Examples from './components/Examples'
 import Help from './components/Help'
+import { Menu, X } from 'lucide-react'
 
 export default function Home() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen)
+  }
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false)
+  }
+
+  const scrollToSection = (sectionId: string) => {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' })
+    closeMobileMenu()
+  }
+
   return (
     <main className="bg-white dark:bg-black min-h-screen">
       <div className="x-main">
@@ -23,39 +39,71 @@ export default function Home() {
               </span>
             </div>
 
-            {/* Center - Navigation Links (Hidden on mobile) */}
+            {/* Desktop Navigation Links */}
             <div className="hidden md:flex items-center gap-6">
               <button
-                onClick={() => document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => scrollToSection('home')}
                 className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white font-medium transition-colors duration-200"
               >
                 Home
               </button>
               <button
-                onClick={() => document.getElementById('templates')?.scrollIntoView({ behavior: 'smooth' })}
-                className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white font-medium transition-colors duration-200"
-              >
-                Templates
-              </button>
-              <button
-                onClick={() => document.getElementById('examples')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => scrollToSection('examples')}
                 className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white font-medium transition-colors duration-200"
               >
                 Examples
               </button>
               <button
-                onClick={() => document.getElementById('help')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => scrollToSection('help')}
                 className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white font-medium transition-colors duration-200"
               >
                 Help
               </button>
             </div>
 
-            {/* Right Side - Theme Toggle */}
+            {/* Right Side - Theme Toggle and Mobile Menu */}
             <div className="flex items-center gap-2">
               <ThemeToggle />
+              
+              {/* Mobile Menu Button */}
+              <button
+                onClick={toggleMobileMenu}
+                className="md:hidden p-2 text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
+              >
+                {isMobileMenuOpen ? (
+                  <X className="w-6 h-6" />
+                ) : (
+                  <Menu className="w-6 h-6" />
+                )}
+              </button>
             </div>
           </div>
+
+          {/* Mobile Menu */}
+          {isMobileMenuOpen && (
+            <div className="md:hidden absolute top-full left-0 right-0 bg-white dark:bg-black border-b border-gray-200 dark:border-gray-800 shadow-lg z-50">
+              <div className="px-4 py-4 space-y-3">
+                <button
+                  onClick={() => scrollToSection('home')}
+                  className="block w-full text-left py-2 text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white font-medium transition-colors"
+                >
+                  Home
+                </button>
+                <button
+                  onClick={() => scrollToSection('examples')}
+                  className="block w-full text-left py-2 text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white font-medium transition-colors"
+                >
+                  Examples
+                </button>
+                <button
+                  onClick={() => scrollToSection('help')}
+                  className="block w-full text-left py-2 text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white font-medium transition-colors"
+                >
+                  Help
+                </button>
+              </div>
+            </div>
+          )}
         </nav>
 
         {/* Main Content */}
@@ -68,11 +116,6 @@ export default function Home() {
           {/* Thread Generator Section */}
           <div id="generator">
             <ThreadGenerator />
-          </div>
-
-          {/* Templates Section */}
-          <div id="templates">
-            <Templates />
           </div>
 
           {/* Examples Section */}

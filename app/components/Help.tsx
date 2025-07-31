@@ -197,22 +197,13 @@ export default function Help() {
           <h3 className="text-2xl font-bold text-black dark:text-white mb-6">
             Need More Help?
           </h3>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex items-center justify-center">
             <a
-              href="mailto:support@threadcraft.ai"
+              href="mailto:codesentinel.tech@gmail.com"
               className="flex items-center gap-2 px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
             >
               <Mail className="w-4 h-4" />
               Contact Support
-            </a>
-            <a
-              href="https://twitter.com/threadcraft_ai"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors"
-            >
-              <Twitter className="w-4 h-4" />
-              Follow Us
             </a>
           </div>
         </motion.div>
